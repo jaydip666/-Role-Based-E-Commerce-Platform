@@ -1,4 +1,8 @@
+import logging
+
 import cloudinary.uploader
+
+logger = logging.getLogger(__name__)
 
 ALLOWED_EXTENSIONS = {"png", "jpg", "jpeg", "gif", "webp"}
 MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024  # 5MB
@@ -38,6 +42,9 @@ def upload_product_image(file_storage):
             resource_type="image",
         )
     except Exception as exc:  # cloudinary raises generic errors
-        raise ImageUploadError(f"Cloudinary upload failed: {exc}") from exc
+        # Log the full detail server-side only — never surface upstream
+        # provider internals (auth/network details) to the client.
+        logger.exception("Cloudinary upload failed")
+        raise ImageUploadError("Image upload failed. Please try again.") from exc
 
     return result.get("secure_url")

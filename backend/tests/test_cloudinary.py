@@ -80,7 +80,7 @@ def test_upload_wraps_cloudinary_errors(monkeypatch):
     monkeypatch.setattr("app.services.cloudinary_service.cloudinary.uploader.upload", fake_upload)
 
     fake_file = FakeFileStorage("product.png")
-    with pytest.raises(ImageUploadError, match="Cloudinary upload failed"):
+    with pytest.raises(ImageUploadError, match="Image upload failed"):
         upload_product_image(fake_file)
 
 
