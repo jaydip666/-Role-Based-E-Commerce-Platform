@@ -26,14 +26,16 @@ def list_relevant_orders():
 
 def get_stats():
     own_products = list(products_collection().find({"owner_id": g.current_user_id}))
-    product_ids = {p["_id"] for p in own_products}
 
     orders = list(orders_collection().find({"items.seller_id": g.current_user_id, "payment_status": "paid"}))
     total_sales = 0.0
     total_units_sold = 0
     for order in orders:
         for item in order.get("items", []):
-            if item.get("seller_id") in product_ids:
+            # Only this seller's own line items count — an order can mix
+            # products from multiple sellers, and each seller must only see
+            # their own share, never the full order total.
+            if item.get("seller_id") == g.current_user_id:
                 total_sales += item.get("subtotal", 0)
                 total_units_sold += item.get("quantity", 0)
 

@@ -1,11 +1,14 @@
 from datetime import datetime, timezone
 
+from flask import g
+
 from app.models.order import ORDER_STATUSES, orders_collection, serialize_order
 from app.models.product import products_collection
 from app.models.roles import ALL_ROLES
-from app.models.user import serialize_user, users_collection
+from app.models.user import serialize_user, update_user_profile, users_collection
 from app.utils.object_id import to_object_id
 from app.utils.responses import error, success
+from app.validators.validators import validate_address, validate_name, validate_phone
 
 
 def list_users():
@@ -31,6 +34,72 @@ def update_user_role(user_id, data):
     )
     updated = users_collection().find_one({"_id": object_id})
     return success({"user": serialize_user(updated)}, "User role updated")
+
+
+def update_user(user_id, data):
+    """Admin edits another user's safe profile fields.
+
+    Only name/phone/address may change here — role has its own dedicated
+    endpoint, and password_hash/email are never touched by this path.
+    """
+    object_id = to_object_id(user_id)
+    if not object_id:
+        return error("Invalid user id", 400)
+
+    existing = users_collection().find_one({"_id": object_id})
+    if not existing:
+        return error("User not found", 404)
+
+    data = data if isinstance(data, dict) else {}
+    updates = {}
+    errors = []
+
+    if "name" in data:
+        name = (data.get("name") or "").strip()
+        if not validate_name(name):
+            errors.append("name must be between 2 and 100 characters")
+        else:
+            updates["name"] = name
+
+    if "phone" in data:
+        phone = (data.get("phone") or "").strip()
+        if not validate_phone(phone):
+            errors.append("phone must be a valid phone number up to 20 characters")
+        else:
+            updates["phone"] = phone
+
+    if "address" in data:
+        address = (data.get("address") or "").strip()
+        if not validate_address(address):
+            errors.append("address must be at most 255 characters")
+        else:
+            updates["address"] = address
+
+    if errors:
+        return error("Validation failed", 400, errors)
+    if not updates:
+        return error("No valid profile fields provided", 400)
+
+    updated = update_user_profile(object_id, updates)
+    return success({"user": serialize_user(updated)}, "User updated successfully")
+
+
+def delete_user(user_id):
+    object_id = to_object_id(user_id)
+    if not object_id:
+        return error("Invalid user id", 400)
+
+    # An admin's own account is only removable by another admin, never by itself,
+    # so a compromised/careless admin session can't lock everyone out.
+    if object_id == g.current_user_id:
+        return error("You cannot delete your own account", 400)
+
+    existing = users_collection().find_one({"_id": object_id})
+    if not existing:
+        return error("User not found", 404)
+
+    users_collection().delete_one({"_id": object_id})
+    return success(None, "User deleted successfully")
 
 
 def list_all_orders():

@@ -20,3 +20,9 @@ def login():
 @authenticate_user
 def me():
     return auth_controller.me()
+
+
+@auth_bp.route("/me", methods=["PUT"])
+@authenticate_user
+def update_me():
+    return auth_controller.update_profile(request.get_json(silent=True))

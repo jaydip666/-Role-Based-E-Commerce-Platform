@@ -1,8 +1,11 @@
 import hashlib
 import hmac
+import logging
 
 from app.config import config
 from app.extensions import get_razorpay_client
+
+logger = logging.getLogger(__name__)
 
 
 class PaymentError(Exception):
@@ -25,7 +28,12 @@ def create_razorpay_order(amount_in_rupees, receipt):
             "payment_capture": 1,
         })
     except Exception as exc:
-        raise PaymentError(f"Failed to create Razorpay order: {exc}") from exc
+        # Log the full detail server-side only — connection/SSL/auth internals
+        # must never reach the client (they'd leak infrastructure details).
+        logger.exception("Razorpay order creation failed")
+        raise PaymentError(
+            "Could not start the payment. Please try again in a moment."
+        ) from exc
     return order
 
 
