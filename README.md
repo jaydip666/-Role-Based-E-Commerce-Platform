@@ -1,4 +1,4 @@
-# Role-Based E-Commerce Platform
+Role-Based E-Commerce Platform
 
 Full Stack Developer Internship Task — a complete role-based e-commerce web application demonstrating database design, JWT authentication, backend-enforced authorization, product CRUD with image upload, search/filtering, wishlist, cart, Razorpay test-mode payments, and role-specific dashboards.
 
