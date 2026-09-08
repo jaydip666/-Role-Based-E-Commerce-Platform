@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
+import PasswordInput from "../components/PasswordInput";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 import { dashboardPathForRole } from "../utils/roles";
@@ -36,7 +37,7 @@ export default function Login() {
     <div className="mx-auto flex max-w-md flex-col gap-6 px-4 py-16">
       <div>
         <h1 className="text-2xl font-bold text-gray-900">Login</h1>
-        <p className="mt-1 text-sm text-gray-500">Welcome back to ShopHub.</p>
+        <p className="mt-1 text-sm text-gray-500">Welcome back to Mini-shopping.</p>
       </div>
 
       <form onSubmit={handleSubmit} className="card space-y-4 p-6">
@@ -57,10 +58,8 @@ export default function Login() {
 
         <div>
           <label htmlFor="login-password" className="form-label">Password</label>
-          <input
+          <PasswordInput
             id="login-password"
-            type="password"
-            className="form-input"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required

@@ -36,7 +36,7 @@ export default function Checkout() {
         key: keyId,
         amount: razorpayOrder.amount,
         currency: razorpayOrder.currency,
-        name: "ShopHub",
+        name: "Mini-shopping",
         description: "Order payment (Razorpay test mode)",
         order_id: razorpayOrder.razorpay_order_id,
         prefill: { name: user?.name, email: user?.email },

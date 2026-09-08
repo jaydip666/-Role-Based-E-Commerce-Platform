@@ -44,7 +44,7 @@ Full Stack Developer Internship Task — a complete role-based e-commerce web ap
 
 ## 1. Project Overview
 
-ShopHub is a three-role e-commerce platform built as an internship evaluation project. It has a Flask + MongoDB REST API backend and a React + Vite + Tailwind frontend, with real Cloudinary image uploads and a real Razorpay test-mode checkout flow. Every permission boundary (who can edit which product, who can see which order, who can access which dashboard) is enforced on the backend — the frontend only hides UI for a better user experience.
+Minishopping  is a three-role e-commerce platform built as an internship evaluation project. It has a Flask + MongoDB REST API backend and a React + Vite + Tailwind frontend, with real Cloudinary image uploads and a real Razorpay test-mode checkout flow. Every permission boundary (who can edit which product, who can see which order, who can access which dashboard) is enforced on the backend — the frontend only hides UI for a better user experience.
 
 ## 2. Main Features
 

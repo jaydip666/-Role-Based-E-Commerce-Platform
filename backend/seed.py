@@ -18,7 +18,7 @@ from app.utils.security import hash_password
 TEST_USERS = [
     {"name": "Admin User", "email": "admin@example.com", "password": "Admin@123", "role": ADMIN},
     {"name": "Sales Person", "email": "sales@example.com", "password": "Sales@123", "role": SALES_PERSON},
-    {"name": "Demo Customer", "email": "user@example.com", "password": "User@1234", "role": USER},
+    {"name": "Customer", "email": "user@example.com", "password": "User@1234", "role": USER},
 ]
 
 SAMPLE_PRODUCTS = [
