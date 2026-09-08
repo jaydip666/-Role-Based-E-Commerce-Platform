@@ -20,6 +20,20 @@ def update_user_role(user_id):
     return admin_controller.update_user_role(user_id, request.get_json(silent=True))
 
 
+@admin_bp.route("/users/<user_id>", methods=["PUT"])
+@authenticate_user
+@require_admin
+def update_user(user_id):
+    return admin_controller.update_user(user_id, request.get_json(silent=True))
+
+
+@admin_bp.route("/users/<user_id>", methods=["DELETE"])
+@authenticate_user
+@require_admin
+def delete_user(user_id):
+    return admin_controller.delete_user(user_id)
+
+
 @admin_bp.route("/orders", methods=["GET"])
 @authenticate_user
 @require_admin

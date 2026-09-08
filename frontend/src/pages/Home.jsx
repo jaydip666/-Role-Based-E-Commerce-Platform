@@ -30,10 +30,10 @@ export default function Home() {
     <div>
       <section className="bg-gradient-to-br from-brand-700 to-brand-900 text-white">
         <div className="mx-auto flex max-w-6xl flex-col items-start gap-4 px-4 py-16">
-          <h1 className="text-3xl font-bold sm:text-4xl">Shop smarter with ShopHub</h1>
+          <h1 className="text-3xl font-bold sm:text-4xl">Shop smarter with Mini-shopping</h1>
           <p className="max-w-xl text-brand-100">
             Browse products from real sellers, build your wishlist, and check out securely with
-            Razorpay — all backed by a role-based Flask API.
+            Razorpay.It is not a real store, and no real transactions are processed.
           </p>
           <Link to="/products" className="btn-primary bg-white text-brand-700 hover:bg-brand-50">
             Browse products

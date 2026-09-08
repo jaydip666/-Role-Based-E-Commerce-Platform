@@ -36,6 +36,7 @@ function NavLinksFor({ role, isAuthenticated }) {
         <NavLink to="/sales/products" className={linkClass}>Products</NavLink>
         <NavLink to="/sales/products/new" className={linkClass}>Add Product</NavLink>
         <NavLink to="/sales/orders" className={linkClass}>Orders</NavLink>
+        <NavLink to="/profile" className={linkClass}>Profile</NavLink>
       </>
     );
   }
@@ -68,7 +69,7 @@ export default function Navbar() {
     <header className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 backdrop-blur">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
         <Link to="/" className="text-lg font-bold text-brand-700">
-          ShopHub
+        Mini-Shopping
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">

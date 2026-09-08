@@ -28,6 +28,25 @@ def validate_name(name):
     return bool(name) and isinstance(name, str) and 2 <= len(name.strip()) <= 100
 
 
+PHONE_RE = re.compile(r"^[0-9+\-\s()]{0,20}$")
+
+
+def validate_phone(phone):
+    """Optional field: empty string is valid, otherwise a loose phone shape."""
+    if phone is None:
+        return True
+    if not isinstance(phone, str):
+        return False
+    return bool(PHONE_RE.match(phone.strip()))
+
+
+def validate_address(address):
+    """Optional field: empty string is valid, otherwise a reasonable length."""
+    if address is None:
+        return True
+    return isinstance(address, str) and len(address.strip()) <= 255
+
+
 def validate_price(price):
     try:
         value = float(price)

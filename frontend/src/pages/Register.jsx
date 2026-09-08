@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import PasswordInput from "../components/PasswordInput";
 import { useAuth } from "../context/AuthContext";
 import { useToast } from "../context/ToastContext";
 
@@ -21,7 +22,7 @@ export default function Register() {
     setSubmitting(true);
     try {
       await register(form.name, form.email, form.password);
-      toast.success("Account created! Welcome to ShopHub.");
+      toast.success("Account created! Welcome to Mini-shopping.");
       navigate("/", { replace: true });
     } catch (err) {
       const messages = err.fieldErrors?.join(", ") || err.friendlyMessage || "Registration failed";
@@ -53,10 +54,8 @@ export default function Register() {
 
         <div>
           <label htmlFor="reg-password" className="form-label">Password</label>
-          <input
+          <PasswordInput
             id="reg-password"
-            type="password"
-            className="form-input"
             value={form.password}
             onChange={handleChange("password")}
             required
